@@ -9,7 +9,7 @@ export const PlayerSchema = new Schema({
     enum: ['Batsman', 'Bowler', 'All-rounder', 'Wicketkeeper'],
     required: true,
   },
-  teamId: { type: Schema.Types.ObjectId, ref: 'Team', required: true },
+  teamId: { type: Schema.Types.ObjectId, ref: 'Team', required: false },
   stats: {
     runs: { type: Number, default: 0 },
     wickets: { type: Number, default: 0 },
@@ -24,7 +24,7 @@ export interface Player extends Document {
   name: string;
   age: number;
   role: 'Batsman' | 'Bowler' | 'All-rounder' | 'Wicketkeeper';
-  teamId: string;  // Changed to string to match the ObjectId of Team
+  teamId?: string;  // Changed to string to match the ObjectId of Team
   stats: {
     runs: number;
     wickets: number;

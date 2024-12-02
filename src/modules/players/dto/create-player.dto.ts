@@ -1,28 +1,29 @@
-import { IsString, IsInt, IsIn, IsOptional } from 'class-validator';
+import { IsString, IsInt, IsEnum, IsOptional, IsMongoId } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
+import { Types } from 'mongoose';
 
 export class CreatePlayerDto {
+  @ApiProperty()
   @IsString()
   name: string;
 
+  @ApiProperty()
   @IsInt()
   age: number;
 
-  @IsString()
-  @IsIn(['Batsman', 'Bowler', 'All-rounder', 'Wicketkeeper'])
+  @ApiProperty()
+  @IsEnum(['Batsman', 'Bowler', 'All-rounder', 'Wicketkeeper'])
   role: string;
 
-  @IsString()
-  teamId?: string;
+  @ApiProperty({ required: false })
+  @IsOptional()  // Makes teamId optional
+  @IsMongoId()
+  teamId?: Types.ObjectId;  // This field is now optional
 
-  @IsOptional()
-  @IsInt()
-  runs?: number;
-
-  @IsOptional()
-  @IsInt()
-  wickets?: number;
-
-  @IsOptional()
-  @IsInt()
-  catches?: number;
+  @ApiProperty()
+  stats: {
+    runs: number;
+    wickets: number;
+    catches: number;
+  };
 }
